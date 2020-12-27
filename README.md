@@ -65,7 +65,6 @@ development.
  - [mario](https://github.com/mario-mazo)
  - [Mark Markaryan](https://github.com/markmark206)
  - [Matthew Cheely](https://github.com/MattCheely)
- - [Michael Bausano](https://github.com/bausano)
  - [Michael Jones](https://github.com/michaeljones)
  - [Mike Roach](https://github.com/mroach)
  - [Milad](https://github.com/slashmili)

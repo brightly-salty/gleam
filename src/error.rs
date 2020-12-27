@@ -155,6 +155,18 @@ pub enum Error {
         toml_ver: String,
         app_ver: String,
     },
+
+    MetadataDecodeError {
+        error: Option<String>,
+    },
+}
+
+impl From<capnp::Error> for Error {
+    fn from(error: capnp::Error) -> Self {
+        Error::MetadataDecodeError {
+            error: Some(error.to_string()),
+        }
+    }
 }
 
 #[derive(Debug, PartialEq, Clone, Copy)]
@@ -247,6 +259,26 @@ impl Error {
             .expect("error pretty buffer write space before");
 
         match self {
+            Error::MetadataDecodeError { error } => {
+                let diagnostic = ProjectErrorDiagnostic {
+                    title: "Failed to decode module metadata".to_string(),
+                    label: "A problem was encountered when decoding the metadata for one 
+of the Gleam dependency modules."
+                        .to_string(),
+                };
+                write_project(buffer, diagnostic);
+                if let Some(error) = error {
+                    writeln!(
+                        buffer,
+                        "\nThe error from the decoder library was:
+
+    {}",
+                        error
+                    )
+                    .unwrap();
+                }
+            }
+
             Error::InvalidProjectName { name, reason } => {
                 let diagnostic = ProjectErrorDiagnostic {
                     title: "Invalid project name".to_string(),
@@ -272,6 +304,7 @@ and underscores.",
                 };
                 write_project(buffer, diagnostic);
             }
+
             Error::UnableToFindProjectRoot { path } => {
                 let diagnostic = ProjectErrorDiagnostic {
                     title: "Invalid project root".to_string(),
