@@ -1,34 +1,9 @@
 #![deny(warnings)]
 #![warn(
     clippy::all,
-    clippy::doc_markdown,
-    clippy::dbg_macro,
-    clippy::todo,
-    clippy::empty_enum,
-    clippy::enum_glob_use,
-    clippy::mem_forget,
-    // TODO: enable once the false positive bug is solved
-    // clippy::use_self,
-    clippy::filter_map_next,
-    clippy::needless_continue,
-    clippy::needless_borrow,
-    clippy::match_wildcard_for_single_variants,
-    clippy::if_let_mutex,
-    clippy::mismatched_target_os,
-    clippy::await_holding_lock,
-    clippy::match_on_vec_items,
-    clippy::imprecise_flops,
-    clippy::suboptimal_flops,
-    clippy::lossy_float_literal,
-    clippy::rest_pat_in_fully_bound_structs,
-    clippy::fn_params_excessive_bools,
-    clippy::inefficient_to_string,
-    clippy::linkedlist,
-    clippy::macro_use_imports,
-    clippy::option_option,
-    clippy::verbose_file_reads,
-    clippy::unnested_or_patterns,
-    // rust_2018_idioms,
+    clippy::pedantic,
+    clippy::nursery,
+    //rust_2018_idioms,
     missing_debug_implementations,
     missing_copy_implementations,
     trivial_casts,
@@ -40,6 +15,7 @@
     // TODO: Fix all examples that violate this
     // unused_results
 )]
+#![allow(clippy::module_name_repetitions, clippy::pub_enum_variant_names)]
 
 #[macro_use]
 mod pretty;
@@ -66,7 +42,13 @@ mod typ;
 mod warning;
 
 mod schema_capnp {
-    #![allow(dead_code, unused_qualifications)]
+    #![allow(
+        dead_code,
+        unused_qualifications,
+        clippy::all,
+        clippy::pedantic,
+        clippy::nursery
+    )]
     include!("../generated/schema_capnp.rs");
 }
 
@@ -296,7 +278,7 @@ fn command_build(root: String) -> Result<(), Error> {
     }
 
     // Read and type check project
-    let (_config, analysed) = project::read_and_analyse(&root)?;
+    let (_, analysed) = project::read_and_analyse(&root)?;
 
     // Generate Erlang code
     let output_files = erl::generate_erlang(analysed.as_slice());
