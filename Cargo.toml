@@ -49,7 +49,7 @@ hexpm = "1.3.0"
 # Allow user to type in sensitive information without showing it in the shell
 rpassword = "5.0.0"
 # Async runtime
-tokio = { version = "1.0.1", features = ["rt", "rt-multi-thread"] }
+tokio = { version = "1.8.4", features = ["rt", "rt-multi-thread"] }
 # Creation of tar file archives
 tar = "0.4.30"
 # gzip compression
