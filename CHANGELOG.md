@@ -298,3 +298,6 @@
 - Fixed a bug where diagnostic about incorrect `size` and `unit` options would
   use incorrect error location.
   ([Andrey Kozhev](https://github.com/ankddev))
+
+- `gleam add` now adds correct constraints for pre-release versions.
+  ([Andrey Kozhev](https://github.com/ankddev))
