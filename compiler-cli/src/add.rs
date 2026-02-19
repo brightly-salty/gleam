@@ -133,3 +133,36 @@ fn version_to_string(version: &Version) -> String {
     }
     text
 }
+
+#[test]
+fn displays_simple_version_correctly() {
+    let version = Version {
+        major: 1,
+        minor: 23,
+        patch: 4,
+        pre: vec![],
+        build: None,
+    };
+
+    let displayed = version_to_string(&version);
+
+    assert_eq!(displayed, "1.23.4");
+}
+
+#[test]
+fn displays_full_version_correctly() {
+    let version = Version {
+        major: 1,
+        minor: 23,
+        patch: 4,
+        pre: vec![
+            Identifier::Numeric(123),
+            Identifier::AlphaNumeric("123abc".to_string()),
+        ],
+        build: Some("12345abc".to_string()),
+    };
+
+    let displayed = version_to_string(&version);
+
+    assert_eq!(displayed, "1.23.4-123.123abc+12345abc");
+}
